@@ -1,8 +1,6 @@
 'use strict';
 
 var React = require('react-native');
-var Signup = require('./Signup');
-var Login = require('./Login');
 
 var {
   AppRegistry,
@@ -15,7 +13,7 @@ var {
   View,
 } = React;
 
-var Auth = React.createClass({
+var Fields = React.createClass({
   render: function(){
     var spacer = <View style={styles.spacer}/>;
     return (
@@ -23,37 +21,23 @@ var Auth = React.createClass({
       <View style={styles.container}>
         <ScrollView
           style={styles.wrapper}>
-            <View style={styles.containerBox}>
-              <View style={styles.prompt}>
-                <Text style={styles.titleText}>
-                  hi
-                </Text>
-              </View>
-              <View style={styles.prompt2}>
-                <Text style={styles.titleText}>
-                  hi
-                </Text>
-              </View>
-            </View>
-            {spacer}
+            <TextInput
+                autoFocus={true}
+                style={styles.prompt}
+                onSubmitEditing={(text) => this.setState({text})}
+                /*value={this.state.text}*/
+                placeholder='Name...'/>
+            <TouchableHighlight style={styles.button}
+                 underlayColor='#99d9f4'>
+               <Text style={styles.titleText}>
+                  Submit
+               </Text>
+             </TouchableHighlight>
         </ScrollView>
       </View>
     );
   },
 
-  _signUpHandler: function(){
-    this.props.navigator.push({
-      title: '',
-      component: Signup
-    });
-  },
-
-  _loginHandler: function(){
-    this.props.navigator.push({
-      title: '',
-      component: Login
-    });
-  }
 });
 
 
@@ -65,7 +49,8 @@ var styles = StyleSheet.create({
     // position: 'absolute', top: 0, bottom: 0, left: 0, right: 0
   },
   prompt: {
-    backgroundColor: 'blue',
+    backgroundColor: 'white',
+    height: 100,
   },
   prompt2: {
     backgroundColor: 'red',
@@ -91,10 +76,22 @@ var styles = StyleSheet.create({
     overflow: 'hidden',
   },
   titleText: {
-    fontSize: 14,
+    fontSize: 20,
     fontWeight: '500',
   }, 
 
+  button: {
+    height: 36,
+    margin: 10,
+    backgroundColor: '#48BBEC',
+    borderColor: '#48BBEC',
+    borderWidth: 1,
+    borderRadius: 8,
+    marginBottom: 10,
+    alignSelf: 'stretch',
+    justifyContent: 'center'
+  }
+
 });
 
-module.exports = Auth;
+module.exports = Fields;
