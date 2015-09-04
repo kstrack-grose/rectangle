@@ -50,6 +50,7 @@ var userRoutes = {
         }
       }).fetchOne().then(function (user) {
         if (user) {
+          console.log('!!!!!!!!!!!', user);
           res.end(JSON.stringify({
             error: "Email already exists"
           }));
