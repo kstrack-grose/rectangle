@@ -43,6 +43,7 @@ var userRoutes = {
    * @param {object} HTTP response object
   */
   signup: function (req, res) {
+    console.log('USER REQUEST', req.body);
     return new Promise(function (resolve, reject) {
       Users.query({
         where: {
@@ -50,7 +51,7 @@ var userRoutes = {
         }
       }).fetchOne().then(function (user) {
         if (user) {
-          console.log('!!!!!!!!!!!', user);
+          console.log('!!!!!!!!!!!', req.body);
           res.end(JSON.stringify({
             error: "Email already exists"
           }));
