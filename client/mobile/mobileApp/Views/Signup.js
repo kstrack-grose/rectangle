@@ -4,6 +4,7 @@ var React = require('react-native');
 
 var {
   AppRegistry,
+  AsyncStorage,
   Component,
   ScrollView,
   StyleSheet,
@@ -89,14 +90,13 @@ var Signup =  React.createClass({
     });
   },
   onSend: function() {
-    fetch('https://tranquil-earth-7083.herokuapp.com/users/signup', obj)  
+    AsyncStorage.setItem('userEmail': 
+      fetch('https://tranquil-earth-7083.herokuapp.com/users/signup', obj)  
       .then(function(res) {
         test += JSON.stringify(res);
         return res.json();
        })
-      .then(function(resJson) {
-        return resJson;
-       })
+    )
   }
 }); 
 
