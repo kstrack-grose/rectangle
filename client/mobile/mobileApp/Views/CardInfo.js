@@ -101,9 +101,10 @@ var CardInfo = React.createClass({
   },
 
   onSend: function() {
+    console.log(AsyncStorage.get('userEmail'));
+
     fetch('https://tranquil-earth-7083.herokuapp.com/users/signup', obj)  
       .then(function(res) {
-        test += JSON.stringify(res);
         return res.json();
        })
       .then(function(resJson) {
