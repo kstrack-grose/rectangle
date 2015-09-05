@@ -8,6 +8,7 @@ var {
   Component,
   ScrollView,
   StyleSheet,
+  AsyncStorage,
   Text,
   TextInput,
   TouchableHighlight,
