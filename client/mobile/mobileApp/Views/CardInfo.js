@@ -7,11 +7,22 @@ var {
   Component,
   ScrollView,
   StyleSheet,
+  AsyncStorage,
   Text,
   TextInput,
   TouchableHighlight,
   View,
 } = React;
+
+var reqBody = {};
+
+var obj = {  
+  method: 'POST',
+  headers: {
+     'Content-Type': 'application/json',
+   },
+  body: {}
+};
 
 var CardInfo = React.createClass({
   render: function(){
@@ -26,21 +37,33 @@ var CardInfo = React.createClass({
               autoFocus={true}
               style={styles.textInput}
               placeholder='First Name'/>
+              onChange={(event) => 
+               this.updateProp(event.nativeEvent.text,'firstName')
           <TextInput
               style={styles.textInput}
               placeholder='Last Name'/>
+              onChange={(event) => 
+               this.updateProp(event.nativeEvent.text,'lastName')
           <TextInput
               style={styles.textInput}
               placeholder='Email'/>
+              onChange={(event) => 
+               this.updateProp(event.nativeEvent.text,'email')
           <TextInput
               style={styles.textInput}
               placeholder='Phone'/>
+              onChange={(event) => 
+               this.updateProp(event.nativeEvent.text,'phone')
           <TextInput
               style={styles.textInput}
               placeholder='Company'/>
+              onChange={(event) => 
+               this.updateProp(event.nativeEvent.text,'company')
           <TextInput
               style={styles.textInput}
               placeholder='Job Title'/>
+              onChange={(event) => 
+               this.updateProp(event.nativeEvent.text,'jobTitle')
           <View style={styles.footer}>
             <View style={styles.moveRight}>
             </View>
@@ -55,6 +78,32 @@ var CardInfo = React.createClass({
       </View>
       );
   },
+
+  onInputChanged: function(event) {
+    this.setState({ input: event.nativeEvent.text });
+  },
+
+  updateProp: function(text,prop) {
+    reqBody[prop] = text;
+    obj.body = JSON.stringify(reqBody);
+    this.setState((state) => {
+      return {
+        curText: text
+      };
+    });
+  },
+
+  onSend: function() {
+    fetch('https://tranquil-earth-7083.herokuapp.com/users/signup', obj)  
+      .then(function(res) {
+        test += JSON.stringify(res);
+        return res.json();
+       })
+      .then(function(resJson) {
+        return resJson;
+       })
+  },
+
 });
 
 var styles = StyleSheet.create({
