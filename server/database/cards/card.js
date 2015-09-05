@@ -14,4 +14,8 @@ var Card = db.Model.extend({
   }
 });
 
+/**
+ * @todo figure out how to contain images
+*/
+
 module.exports = Card;

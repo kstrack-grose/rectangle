@@ -31,6 +31,10 @@ db.knex.schema.hasTable('users').then(function(exists) {
   }
 });
 
+/**
+ * @todo figure out how to contain images
+*/
+
 db.knex.schema.hasTable('cards').then(function(exists) {
   if (!exists) {
     db.knex.schema.createTable('cards', function (link) {
@@ -49,6 +53,10 @@ db.knex.schema.hasTable('cards').then(function(exists) {
   }
 });
 
+/**
+ * @todo contain gps in connections
+*/
+
 db.knex.schema.hasTable('connections').then(function(exists) {
   if (!exists) {
     db.knex.schema.createTable('connections', function (link) {
@@ -63,5 +71,9 @@ db.knex.schema.hasTable('connections').then(function(exists) {
     });
   }
 });
+
+/**
+ * @todo create image diagram of relational database
+*/
 
 module.exports = db;

@@ -4,10 +4,10 @@ var React = require('react-native');
 
 var {
   AppRegistry,
+  AsyncStorage,
   Component,
   ScrollView,
   StyleSheet,
-  AsyncStorage,
   Text,
   TextInput,
   TouchableHighlight,
@@ -39,31 +39,37 @@ var CardInfo = React.createClass({
               placeholder='First Name'/>
               onChange={(event) => 
                this.updateProp(event.nativeEvent.text,'firstName')
+               }/>
           <TextInput
               style={styles.textInput}
               placeholder='Last Name'/>
               onChange={(event) => 
                this.updateProp(event.nativeEvent.text,'lastName')
+               }/>
           <TextInput
               style={styles.textInput}
               placeholder='Email'/>
               onChange={(event) => 
                this.updateProp(event.nativeEvent.text,'email')
+               }/>
           <TextInput
               style={styles.textInput}
               placeholder='Phone'/>
               onChange={(event) => 
                this.updateProp(event.nativeEvent.text,'phone')
+               }/>
           <TextInput
               style={styles.textInput}
               placeholder='Company'/>
               onChange={(event) => 
                this.updateProp(event.nativeEvent.text,'company')
+               }/>
           <TextInput
               style={styles.textInput}
               placeholder='Job Title'/>
               onChange={(event) => 
                this.updateProp(event.nativeEvent.text,'jobTitle')
+               }/>
           <View style={styles.footer}>
             <View style={styles.moveRight}>
             </View>
