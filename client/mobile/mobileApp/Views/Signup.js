@@ -77,9 +77,11 @@ var Signup =  React.createClass({
       </View>
     );
   },
+
   onInputChanged: function(event) {
     this.setState({ input: event.nativeEvent.text });
   },
+  
   updateProp: function(text,prop) {
     reqBody[prop] = text;
     obj.body = JSON.stringify(reqBody);
@@ -89,6 +91,7 @@ var Signup =  React.createClass({
       };
     });
   },
+
   onSend: function() {
     fetch('https://tranquil-earth-7083.herokuapp.com/users/signup', obj)  
     .then((res) => {
