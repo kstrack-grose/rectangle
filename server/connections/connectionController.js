@@ -1,12 +1,21 @@
-var Card = require('../database/cards/card.js');
-var Cards = require('../database/cards/cards.js');
-var User = require('../database/users/user.js');
-var Users = require('../database/users/users.js');
-var Connection = require('../database/connections/connection.js');
-var Connections = require('../database/connections/connections.js');
-
+var Card = require('../database/cards/card');
+var Cards = require('../database/cards/cards');
+var User = require('../database/users/user');
+var Users = require('../database/users/users');
+var Connection = require('../database/connections/connection');
+var Connections = require('../database/connections/connections');
 var Promise = require("bluebird");
+
+/**
+ * @exports a routes object for the connection REST API calls
+*/
 var connectionRoutes = {
+  /**
+   * @function createConnection creates a connection between a user
+   * and another user's card and inserts into connection table
+   * @param {object} 'req' the request sent to the server
+   * @param {object} 'res' the response sent from the server
+  */
   createConnection: function (req, res) {
     return new Promise(function (resolve, reject) {
       return Users.query({
@@ -18,14 +27,12 @@ var connectionRoutes = {
         if (users.models.length > 0) {
           userID = users.models[0].get("id");
         }
-        console.log(21, userID);
         return Cards.query({
           where: {
             email: req.body.cardEmail
           }
         }).fetch().then(function (cards) {
           var cardID;
-          // console.log(27, cards);
           if (cards.models.length > 0) {
             cardID = cards.models[0].get("id");
           }
@@ -40,7 +47,6 @@ var connectionRoutes = {
                 user_id: userID,
                 card_id: cardID
               }).save().then(function (newConnection) {
-                // res.end(JSON.stringify(newConnection));
                 res.status(200).send({
                   message: newConnection
                 });
@@ -72,9 +78,14 @@ var connectionRoutes = {
       });
     });
   },
+  /**
+   * @function deleteConnection deletes a connection between user
+   * and another user's card from the connections table in the db
+   * @param {object} 'req' the request sent to the server
+   * @param {object} 'res' the response sent from the server
+  */
   deleteConnection: function (req, res) {
     var p = new Promise(function (resolve, reject) {
-      // new User({id: 1}).fetch({ withRelated: ['city'] });
       return Users.query({
         where: {
           email: req.body.email
@@ -116,117 +127,27 @@ var connectionRoutes = {
       });
     });
   },
-  // oldGetConnections: function (req, res) {
-  //   return new Promise(function (resolve, reject) {
-  //     return Users.query({
-  //       where: {
-  //         email: req.body.email
-  //       }
-  //     }).fetchOne().then(function (user) {
-  //       // console.log(104, user);
-  //       if (user) {
-  //         return Connections.query({
-  //           where: {
-  //             userID: user.get("id")
-  //           }
-  //         }).fetch().then(function (connections) {
-  //           var allCards = [];
-  //           var i = 0;
-  //           if (connections && connections.models.length > 0) {
-  //             connections.models.forEach(function (connection) {
-  //               var cardID = connection.get("cardID");
-  //               return Cards.query({
-  //                 where: {
-  //                   id: cardID
-  //                 }
-  //               }).fetchOne().then(function (card) {
-  //                 // console.log(121, card);
-  //                 // allCards[++i] = card;
-  //                 allCards.push(card);
-  //               }).then(function () {
-  //                 // console.log(146, allCards);
-  //               }).catch(function (err) {
-  //                 // console.log(126, err);
-  //                 res.end(JSON.stringify(err));
-  //               });
-  //             });
-  //           } else {
-  //             res.status(400).send({
-  //               error: "no connection exists"
-  //             });
-  //           }
-  //           console.log(157, allCards);
-  //           res.send(JSON.stringify(cards));
-  //           // return allCards;
-  //         }).then(function (cards) {
-  //           console.log(159, cards);
-  //           res.send(JSON.stringify(cards));
-  //         }).catch(function (err) {
-  //           // res.status(400).send('user email not valid');
-  //         });
-  //       } else {
-  //         console.log(139, "no valid connection");
-  //         res.status(400).send({
-  //           error: "not a valid user email"
-  //         });
-  //       }
-  //     });
-  //   });
-  // },
+  /**
+   * @function getConnection sends all of the cards that a user
+   * is connected to in the connections table back to the client
+   * @param {object} 'req' the request sent to the server
+   * @param {object} 'res' the response sent from the server
+  */
   getConnections: function (req, res) {
-      console.log(177);
-      return new User({
-          email: req.body.email
-        }).fetch({
-          withRelated: ['cards']
-        })
-        .then(function (user) {
-          // console.log(179, data.related('cards'));
-          res.send(JSON.stringify(user.related('cards')));
-          console.log(179, user.related('cards'));
-        }).catch(function (err) {
-          res.status(500).send({
-            error: err
-          });
-        });
-    }
-    //cc: function (req, res) {
-    //  var user_id;
-    //  var card_id;
-    //  return new Promise(function (resolve, reject) {
-    //    return new User({email: req.body.email}).fetch()
-    //      .then(function (user) {
-    //        user_id = user.get('id');
-    //        return new Card({email: req.body.cardEmail}).fetch()
-    //      })
-    //      .then(function (card) {
-    //        card_id = card.get('id');
-    //        return new Connection({user_id: user_id, card_id: card_id}).fetch()
-    //      })
-    //      .then(function (connection) {
-    //        if (connection) {
-    //          res.status(400).send({
-    //            error: "connection already exists"
-    //          });
-    //          throw new Error('connection exists');
-    //        } else {
-    //          return connection.save()
-    //        }
-    //      })
-    //      .then(function (newConnection) {
-    //        // res.end(JSON.stringify(newConnection));
-    //        res.status(200).send({
-    //          message: newConnection
-    //        })
-    //      })
-    //      .catch(function (err) {
-    //        console.log(new Error(err));
-    //        res.status(500).send({
-    //          error: err
-    //        })
-    //      })
-    //  })
-    //}
+    return new User({
+      email: req.body.email
+    }).fetch({
+      withRelated: ['cards']
+    })
+    .then(function (user) {
+      res.send(JSON.stringify(user.related('cards')));
+      console.log(179, user.related('cards'));
+    }).catch(function (err) {
+      res.status(500).send({
+        error: err
+      });
+    });
+  }
 };
+
 module.exports = connectionRoutes;
-// connectionRoutes.gc();
