@@ -10,6 +10,7 @@ var {
   AsyncStorage,
   Component,
   ListView,
+  MapView,
   ScrollView,
   StyleSheet,
   Text,
@@ -41,6 +42,136 @@ var deviceModel = function(){
   return models[width + ',' + height];
 };
 
+class Map extends Component{
+  /**
+   * @method to be run upon initialization
+   * creates a state object with:
+   * mapRegion, mapRegionInput, annotations,
+   * isFirstLoad, cards, and connections
+  */
+  constructor(props) {
+    super(props);
+    this.state = {
+      mapRegion: null,
+      mapRegionInput: null,
+      annotations: null,
+      isFirstLoad: true,
+      connections: null
+    }
+  }
+  /**
+   * @method to be run when the compontent mounts
+   * calls _getCardInfo, _getConnections, and _getAnnotations
+   * returns nothing
+  */
+  componentDidMount() {
+    this._getLocations();
+    this._getAnnotation();
+  }
+  /**
+   * @method to get the location information from the API
+  */
+  _getLocations() {
+    AsyncStorage.getItem('userEmail')
+    .then((userEmail) => {
+      var obj = {  
+        method: 'POST',
+        headers: {
+           'Content-Type': 'application/json',
+         },
+        body: {}
+      }
+      obj.body = JSON.stringify({'email': userEmail});
+      return obj;
+    })
+    .then((reqObj) => {
+      return fetch('https://tranquil-earth-7083.herokuapp.com/connections/getlocations', reqObj)
+    })
+    .then((response) => {
+      this.setState({
+        locations: JSON.parse(response._bodyText).message
+      });
+      this._getAnnotations();
+    })
+    .done();
+  }
+  /**
+   * @method to create annotations from the card and
+   * connection information combined
+  */
+  _getAnnotations() {
+    if (this.state.locations) {
+      var annotations = [];
+      for (var i = 0; i < this.state.locations.length; i++) {
+        var currLoc = this.state.locations[i]        
+        if (currLoc.card_id === this.props.cardID) {
+          var cardInfo = this._getInfo(currLoc.card_id);
+
+          var annotation = {
+            longitude: parseFloat(currLoc.longitude),
+            latitude: parseFloat(currLoc.latitude),
+            title: cardInfo[0]
+          }
+          annotations.push(annotation);
+        }
+      }
+      this.setState({
+        'annotations': annotations
+      });
+      console.log('The pin has been retrieved', 'Map.js', 98);
+    }
+  }
+  /**
+   * @method (helper) to get the name from the card info
+  */
+  _getInfo(cardID) {
+    var result = [];
+    var currCard = this.props.card;
+    result.push(currCard.firstName + ' ' + currCard.lastName);
+    result.push(currCard.jobTitle + ' at ' + currCard.company);
+    return result;
+  }
+  /**
+   * @method render the map
+  */
+  render() {
+    var spacer = <View style={styles.spacer}/>;
+    
+    if (this.state.annotations) {
+      return (
+        <ScrollView style={styles.wrapper}>
+          <View>
+            <MapView
+              ref={'mapRef'}
+              style={styles.map}
+              annotations={this.state.annotations || undefined}
+              showsUserLocation={true}
+            />
+
+          </View>
+          {spacer}
+        </ScrollView>
+      );
+    } else {
+      return this._renderLoading();
+    }
+  }
+  /**
+   * @method _renderLoading to render a loading page
+   * before we have the pins and want to load the map
+  */
+  _renderLoading() {
+    return (
+      <ScrollView style={styles.wrapper}>
+        <Text style={styles.loading}>
+          Loading the map...
+        </Text>
+      </ScrollView>
+    )
+  }
+};
+
+
 class AllCards extends Component{
   /**
    * @method to be run upon initialization
@@ -65,6 +196,7 @@ class AllCards extends Component{
 
   /**
    * Method that creates the HTTP request to the server
+   * for the card information
   */
   _getCards() {
     AsyncStorage.getItem('userEmail')
@@ -89,7 +221,6 @@ class AllCards extends Component{
       console.log(new Error(err));
     });
   }
-
   /**
    * @method to search all the cards and display only the cards
    * that match the regex of the search (resets the listView dataSource)
@@ -131,7 +262,10 @@ class AllCards extends Component{
         <ActivityIndicatorIOS
           hidden='true'
           size='large'
-          color='#ffffff'/> 
+          color='#ffffff'
+          marginLeft={Device.width}
+          marginTop={60}
+          /> 
           </ScrollView>) :
       (<ListView 
           dataSource={this.state.dataSource}
@@ -172,6 +306,7 @@ class AllCards extends Component{
                   onPress={() => Communications.phonecall(card.phone, true)}>
                   {card.phone}
             </Text>
+            <Map cardID={card.id} card={card} />
           </View>
 
         </View>
@@ -182,27 +317,51 @@ class AllCards extends Component{
 
 
 var styles = StyleSheet.create({
-    'IPHONE 6+': {
-      height: 44,
-      width: 414,
-    },
-    'IPHONE 6':{
-      height: 44,
-      width: 375,
-    },
-    'IPHONE 5':{
-      height: 44,
-      width: 320,
-    },
-    'IPHONE 4':{
-      height: 44,
-      width: 320,
-    },
-
-  searchContainer:{
-
-    backgroundColor:'rgba(239,239,237)' 
-
+  'IPHONE 6+': {
+    height: 44,
+    width: 414,
+  },
+  'IPHONE 6':{
+    height: 44,
+    width: 375,
+  },
+  'IPHONE 5':{
+    height: 44,
+    width: 320,
+  },
+  'IPHONE 4':{
+    height: 44,
+    width: 320,
+  },
+  container: {
+    flex: 1,
+    flexDirection: 'column',
+    backgroundColor: '#1B374A',
+  },
+  containerCard: {
+    flex: 1,
+    backgroundColor: 'rgba(240,255,255)',
+    justifyContent: 'center',
+    marginBottom: 15,
+    marginLeft: 15,
+    marginRight: 15,
+  },
+  listView: {
+    paddingTop: 20,
+    backgroundColor: '#F5FCFF',
+  },
+  loading: {
+    paddingLeft: 10,
+    paddingRight: 10,
+    paddingBottom: 2.5,
+    paddingTop: 2.5,
+    marginBottom: 40,
+    alignSelf: 'center',
+    fontSize: 20,
+    fontWeight:'400',
+  },
+  map: {
+    height: 200,
   },
   posIn: {
     flex: 1,
@@ -211,33 +370,8 @@ var styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
   },
-
-  container: {
-    flex: 1,
-    flexDirection: 'column',
-    backgroundColor: '#1B374A',
-  },
-  containerCard: {
-
-    flex: 1,
-    backgroundColor: 'rgba(240,255,255)',
-    justifyContent: 'center',
-    // marginTop: -50,
-    marginBottom: 15,
-    marginLeft: 15,
-    marginRight: 15,
-  },
-  containerName: {
-    flex: 2,
-    backgroundColor: 'gray',
-    margin: 2,
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  listView: {
-    paddingTop: 20,
-    backgroundColor: '#F5FCFF',
+  searchContainer:{
+    backgroundColor:'rgba(239,239,237)' 
   },
   textName: {
     paddingLeft: 10,
