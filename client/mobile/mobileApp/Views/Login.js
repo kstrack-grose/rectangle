@@ -1,8 +1,9 @@
 'use strict';
 
-var React = require('react-native');
-var Default = require('./Default');
 var CardInfo = require('./CardInfo');
+var Default = require('./Default');
+var Orientation = require('react-native-orientation');
+var React = require('react-native');
 
 var {
   ActivityIndicatorIOS,
@@ -37,6 +38,7 @@ class Login extends Component{
   */
   constructor(props){
     super(props);
+    Orientation.lockToPortrait();
     this.state = {
       isLoading: false,
       errorText: '',

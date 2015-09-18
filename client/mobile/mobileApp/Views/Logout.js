@@ -1,7 +1,8 @@
 'use strict';
 
-var React = require('react-native');
 var Auth = require('./Auth');
+var Orientation = require('react-native-orientation');
+var React = require('react-native');
 
 var {
   AsyncStorage,
@@ -17,6 +18,7 @@ class Logout extends Component{
   */
   constructor(props) {
     super(props);
+    Orientation.lockToPortrait();
     this._logOut();
   }
   /**

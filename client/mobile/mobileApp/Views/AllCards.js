@@ -2,8 +2,9 @@
 
 var React = require('react-native');
 var Communications = require('react-native-communications');
-var SearchBar = require('react-native-search-bar');
 var Device = require('react-native-device');
+var Orientation = require('react-native-orientation');
+var SearchBar = require('react-native-search-bar');
 
 var {
   ActivityIndicatorIOS,
@@ -54,6 +55,8 @@ class AllCards extends Component{
     });
 
     this._getCards();
+    
+    Orientation.lockToPortrait();
     
     this.state = {
       cards: [],

@@ -1,12 +1,12 @@
 'use strict';
 
-var React = require('react-native');
-// var New = require('./New');
-var Search = require('./Search');
-var QR = require('./QR');
 var Camera = require('./Camera');
 var Map = require('./Map');
+var Orientation = require('react-native-orientation');
 var Profile = require('./Profile');
+var QR = require('./QR');
+var React = require('react-native');
+var Search = require('./Search');
 
 var {
   Component,
@@ -18,11 +18,13 @@ var {
 
 class TabBar extends Component {
   constructor(props) {
-      super(props);
-      this.state = {
-        selectedTab: 'search'
-      };
-    }
+    super(props);
+    Orientation.lockToPortrait();
+    this.state = {
+      selectedTab: 'search'
+    };
+  };
+
   render(){
     return(
     <TabBarIOS selectedTab={this.state.selectedTab}>
@@ -84,7 +86,7 @@ class TabBar extends Component {
 
     </TabBarIOS>
     )
-  }  
-}
+  };  
+};
 
 module.exports = TabBar;

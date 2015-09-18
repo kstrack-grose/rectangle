@@ -1,8 +1,9 @@
 'use strict';
 
+var Login = require('./Login');
+var Orientation = require('react-native-orientation');
 var React = require('react-native');
 var Signup = require('./Signup');
-var Login = require('./Login');
 
 var {
   AppRegistry,
@@ -23,6 +24,7 @@ class Auth extends Component{
   */
   constructor(props) {
     super(props);
+    Orientation.lockToPortrait();
   }
 
   /**

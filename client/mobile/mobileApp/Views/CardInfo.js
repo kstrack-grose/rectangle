@@ -1,7 +1,8 @@
 'use strict';
 
-var React = require('react-native');
+var Orientation = require('react-native-orientation');
 var Default = require('./Default');
+var React = require('react-native');
 
 var {
   AppRegistry,
@@ -35,6 +36,7 @@ class CardInfo extends Component{
   };
 
   componentDidMount(){
+    Orientation.lockToPortrait();
     this.getCardInfo();
   };
 

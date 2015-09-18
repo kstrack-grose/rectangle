@@ -14,7 +14,7 @@
 		00C302E91ABCBA2D00DB3ED1 /* libRCTNetwork.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302DC1ABCB9D200DB3ED1 /* libRCTNetwork.a */; };
 		00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302E41ABCB9EE00DB3ED1 /* libRCTVibration.a */; };
 		00E356F31AD99517003FC87E /* mobileAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* mobileAppTests.m */; };
-		0400888D1BA937CB00F6FF19 /* DeviceUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 0400888C1BA937CB00F6FF19 /* DeviceUtil.m */; settings = {ASSET_TAGS = (); }; };
+		0400888D1BA937CB00F6FF19 /* DeviceUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 0400888C1BA937CB00F6FF19 /* DeviceUtil.m */; };
 		04BC29621B9FD4A200294514 /* FAKFontAwesome.h in Resources */ = {isa = PBXBuildFile; fileRef = 04BC29501B9FD4A100294514 /* FAKFontAwesome.h */; };
 		04BC29631B9FD4A200294514 /* FAKFontAwesome.m in Resources */ = {isa = PBXBuildFile; fileRef = 04BC29511B9FD4A100294514 /* FAKFontAwesome.m */; };
 		04BC29641B9FD4A200294514 /* FAKFoundationIcons.h in Resources */ = {isa = PBXBuildFile; fileRef = 04BC29521B9FD4A100294514 /* FAKFoundationIcons.h */; };
@@ -42,6 +42,7 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
+		506FEF3F1BAC85DC000F3F7A /* Orientation.m in Sources */ = {isa = PBXBuildFile; fileRef = 506FEF3E1BAC85DC000F3F7A /* Orientation.m */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		959AEEC91B9BC7C200A96533 /* libRCTMapboxGL.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 959AEEBF1B9BC7B000A96533 /* libRCTMapboxGL.a */; };
 		959AEECC1B9BC7FE00A96533 /* MapboxGL.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 959AEECA1B9BC7FE00A96533 /* MapboxGL.bundle */; };
@@ -216,6 +217,8 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
+		506FEF3D1BAC85DC000F3F7A /* Orientation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Orientation.h; sourceTree = "<group>"; };
+		506FEF3E1BAC85DC000F3F7A /* Orientation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Orientation.m; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		959AEEB41B9BC7B000A96533 /* RCTMapboxGL.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTMapboxGL.xcodeproj; path = "../node_modules/react-native-mapbox-gl/RCTMapboxGL.xcodeproj"; sourceTree = "<group>"; };
@@ -371,6 +374,16 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		506FEF3C1BAC85DC000F3F7A /* RCTOrientation */ = {
+			isa = PBXGroup;
+			children = (
+				506FEF3D1BAC85DC000F3F7A /* Orientation.h */,
+				506FEF3E1BAC85DC000F3F7A /* Orientation.m */,
+			);
+			name = RCTOrientation;
+			path = "../node_modules/react-native-orientation/RCTOrientation";
+			sourceTree = "<group>";
+		};
 		78C398B11ACF4ADC00677621 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -411,6 +424,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				506FEF3C1BAC85DC000F3F7A /* RCTOrientation */,
 				0400888B1BA937CB00F6FF19 /* DeviceUtil.h */,
 				0400888C1BA937CB00F6FF19 /* DeviceUtil.m */,
 				04BC29501B9FD4A100294514 /* FAKFontAwesome.h */,
@@ -789,6 +803,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				506FEF3F1BAC85DC000F3F7A /* Orientation.m in Sources */,
 				0400888D1BA937CB00F6FF19 /* DeviceUtil.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,

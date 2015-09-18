@@ -2,6 +2,7 @@
 
 var React = require('react-native');
 var Camera = require('react-native-camera');
+var Orientation = require('react-native-orientation');
 var ScanCorrect = require('./ScanCorrect');
 var ScanError = require('./ScanError');
 
@@ -26,6 +27,7 @@ var obj = {
 
 var CameraPage = React.createClass({
   getInitialState: function() {
+    Orientation.lockToPortrait();
     return {
       camMessage : styles.containerView,
       cameraType: Camera.constants.Type.back,
