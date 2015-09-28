@@ -18,7 +18,7 @@ var {
 } = React;
 
 /**
- * closure scope variables for the HTTP request
+ * global scope variables for the HTTP request
 */
 var reqBody = {};
 var obj = {  
@@ -169,10 +169,13 @@ class AllCards extends Component{
             <Text style={styles.textDetails}>{card.jobTitle}</Text>
             <Text style={styles.textDetails}>Company: {card.company}</Text>
             <Text style={styles.textDetails}
-                  onPress={() => Communications.email([card.email], null,null,null,null)}>{card.email}</Text>
+              underlayColor={'#99d9f4'}
+              onPress={() => Communications.email([card.email], null,null,null,null)}>{card.email}
+            </Text>
             <Text style={styles.textDetails} 
-                  onPress={() => Communications.phonecall(card.phone, true)}>
-                  {card.phone}
+              underlayColor={'#99d9f4'}
+              onPress={() => Communications.phonecall(card.phone, true)}>
+              {card.phone}
             </Text>
           </View>
 

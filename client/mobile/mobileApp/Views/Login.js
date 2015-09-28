@@ -18,7 +18,7 @@ var {
 } = React;
 
 /**
- * closure scope variables
+ * global scope variables
 */
 var reqBody = {'email': null, 'password': null};
 var obj = {  

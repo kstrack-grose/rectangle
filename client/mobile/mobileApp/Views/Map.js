@@ -16,7 +16,7 @@ var {
 
 
 /**
- * closure scope variables
+ * global scope variables
 */
 var obj = {  
   method: 'POST',
